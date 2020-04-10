@@ -1,4 +1,42 @@
-<button class="btn btn-success" (click)="salvar()">salvar</button>
-<button class="btn btn-danger" (click)="remover()">remover</button>
-<button class="btn btn-primary" (click)="concluido()">concluido</button>
+<div class="row">
+<div class="col-md-5">
+    <label>Descrição</label>
+    <input class="form-control" [(ngModel)]="task.description">
+    <label>Status</label>
+    <select class="form-control" [(ngModel)]="task.status">
+        <option value="1">A Fazer</option>
+        <option value="2">Concluído</option>
+    </select>
+    <br>
+    <button class="btn btn-success" [disabled]="task.description == null || task.status == null || task.description == '' || task.status == ''" (click)="save()">{{button}}</button>
+    <button class="btn btn-primary" style="margin-left: 5%;" (click)=clean()>Limpar</button>
+</div>
+<div class="col-md-4"
+(drop)="drop()" 
+(dragover)="allowDrop($event)">
+<p>Clique em uma linha e arraste aqui para remover</p>
+<img style="margin-left: 50%;margin-top:2%" src="/assets/lixeira-ou-lixeira_1308-25190.jpg" height="80"/>
+</div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Status</th>
+            <th>Conlcuído</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let task of list" 
+    draggable="true" (dragstart)="drag(task)">    
+        <tr  [ngStyle]="{'background-color':task.status == 2?'#66ff99':''}">
+            <td>{{task.description}}</td>
+            <td *ngIf="task.status == 1">A Fazer</td>
+            <td *ngIf="task.status == 2">Concluído</td>
+            <input *ngIf="task.status == 2" type="checkbox" (click)="concluded(task)" checked/>
+            <input *ngIf="task.status == 1" type="checkbox" (click)="concluded(task)"/>
+            <td><button class="btn btn-warning" (click)="edit(task)">Editar</button></td>
+            <td><button class="btn btn-danger" (click)="remove(task)">Remover</button></td>
+        </tr>
+    </tbody>
+</table>
 <router-outlet></router-outlet>
