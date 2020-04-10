@@ -1,4 +1,4 @@
-# TaskManagementProjeto TaskManagement
+# Projeto TaskManagement
 
 1- No projeto do java a regra de negócios ocorre dentro do controller "TaskController" </br>
 2- Quando For fazer alguma alterção na base de dados chamamos o TaskRepository que está dentro de repository</br>
