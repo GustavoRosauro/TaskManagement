@@ -43,8 +43,8 @@ public class TaskController {
 //Recebe json no formato do objeto TaskModel e inseri na base
 @PostMapping("/save")
 @Transactional
-	public @ResponseBody String Insert(@RequestBody TaskModel t) {
-	return new TaskRepository(this.repository).save(t);
+	public @ResponseBody void Insert(@RequestBody TaskModel t) throws Exception {
+	 new TaskRepository(this.repository).save(t);
 }
 // Altera o status para 2 que signicia concluido comentários
 @PutMapping("/concluded/{id}")
@@ -57,5 +57,11 @@ public class TaskController {
 @Transactional
 	public @ResponseBody void delete(@PathVariable long id) {
 	new TaskRepository(this.repository).delete(id);
+}
+//Edita conteudo da tarefa
+@PutMapping("edit/{id}")
+@Transactional
+	public @ResponseBody void edit(@PathVariable long id,@RequestBody TaskModel t) {
+	new TaskRepository(this.repository).edit(t, id);
 }
 }

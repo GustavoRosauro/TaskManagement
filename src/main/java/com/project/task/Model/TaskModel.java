@@ -25,7 +25,8 @@ public class TaskModel {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private long id;
 private String description;
-public int status;
+private int status;
+
 public long getId() {
 	return id;
 }

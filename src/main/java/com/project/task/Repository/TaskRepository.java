@@ -22,13 +22,12 @@ public class TaskRepository{
 		
 	}
 	//Salva na base
-	public String save(TaskModel t) {
+	public void save(TaskModel t) throws Exception {
 		try {
-			this.taskRespository.save(t);
-			return "Inserido com sucesso";
+			this.taskRespository.save(t);	 		
 			
 		} catch (Exception e) {
-			return e.getMessage();
+			throw new Exception(e.getMessage());
 		}
 	}
 	//Retorna Dados com a clausula where definida no objeto
@@ -44,8 +43,14 @@ public class TaskRepository{
     //Defini o status como sendo o status 2 conculuído 
 	public void concluded(long id, TaskModel t) {
 		TaskModel objeto =  this.taskRespository.findById(id).get();
-	    objeto.setStatus(t.status);
+	    objeto.setStatus(t.getStatus());
 	    this.taskRespository.save(objeto);		
 	}
-
+	//Edita Tarefa 
+	public void edit(TaskModel t,long id) {
+		TaskModel old = this.taskRespository.findById(id).get();
+		old.setDescription(t.getDescription());
+		old.setStatus(t.getStatus());
+		this.taskRespository.save(old);
+	}
 }
